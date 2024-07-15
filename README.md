@@ -18,7 +18,7 @@ Estan configurados con una lan para poder conectarse con otros docks y por nombr
 **IMPORTANTE**<br>
 
 Hay que crear las carpetas:
-* soporte-data -> en esta carpeta se guardan los datos del sistema
-* postgres-data -> en esta carpeta se guarda la base de datos
-* npm-data -> para guardar las configuraciones de Nginx-Proxy-Manager
 * letsencrypt -> para guardar los certificados ssl
+* npm-data -> para guardar las configuraciones de Nginx-Proxy-Manager
+* postgres-data -> en esta carpeta se guarda la base de datos
+* soporte-data -> en esta carpeta se guardan los datos del sistema

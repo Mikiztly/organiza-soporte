@@ -47,7 +47,7 @@ services:
     # ports:
       # - "5432:5432"
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
-    hostname: postgress
+    hostname: postgres
     networks:
       lan_docker:
 
@@ -106,7 +106,7 @@ volumes:
     driver: local # Define the driver and options under the volume name
     driver_opts:
       type: none
-      device: /mnt/docker-data/postgress-data
+      device: /mnt/docker-data/postgres-data
       o: bind
     name: postgress-data
   # Volumen ara guardar los datos de nginx-proxy-manager
