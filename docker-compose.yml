@@ -1,0 +1,126 @@
+#
+# Son cuatro servicios para el sistema de Soporte tecnico desarrollado por Pablo Valdivieso.
+# Se configuro la red de forma manual, esto me da la ventaja de usar los nombres de host en vez de IP y tambien puedo conectarme a los servidores desde otro Docker.
+
+version: '3.8'
+
+# Le doy un nombre descriptivo para saber que es en portainer
+name: soporte-tecnico
+
+services:
+  # https://hackernoon.com/streamlining-your-django-development-environment-with-docker-containers
+  # Se construye una imagen en base a las declaraciones de dockerfile
+  app:
+    build: .
+    command:
+      - 'python manage.py runserver 0.0.0.0:8000'
+      - 'python manage.py makemigrations'
+      - 'python manage.py migrate'
+    restart: unless-stopped
+    # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
+    # ports:
+      # - 8000:8000
+    # Utilizamos un archivo para la configuracion de las credenciales de la base de datos ya que lo utilizamos en la aplicacion y en los docker
+    env_file:
+      - app.env
+    volumes:
+      - soporte-data:/app
+    depends_on:
+      - postgress
+    # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
+    hostname: soporte-tecnico
+    networks:
+      lan_docker:
+
+  # https://hackernoon.com/streamlining-your-django-development-environment-with-docker-containers
+  postgress:
+    container_name: postgres
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=soporte
+      - POSTGRES_PASSWORD=Strong-2024*
+      - POSTGRES_DB=soporte_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
+    # ports:
+      # - "5432:5432"
+    # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
+    hostname: postgress
+    networks:
+      lan_docker:
+
+  # Creamos nginx-proxy-manager para vincular la red con portainer y mariadb
+  # https://nginxproxymanager.com/setup/
+  # https://github.com/NginxProxyManager/nginx-proxy-manager
+  # Credenciales por defecto
+  # Email: admin@example.com
+  # Password: changeme
+  npm:
+    container_name: npm
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    # Estos son los unicos puertos a declara para que funcione todo con el proxy NPM
+    ports:
+      # These ports are in format <host-port>:<container-port>
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+      # Add any other Stream port you want to expose
+      # - '21:21' # FTP
+    # Configuracion de discos
+    # Es muy importante que los directorios existan para que el stack funcione
+    volumes:
+      - npm-data:/data
+      - letsencrypt:/etc/letsencrypt
+    # Configuramos una IP estatica para el dock
+    hostname: npm
+    networks:
+      lan_docker:
+
+# Declaramos la red que vamos a utilizar
+networks:
+  # Configuracion de la red lan_docker
+  lan_docker:
+    name: lan_docker
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.200.0/24
+          gateway: 192.168.200.1
+
+# Como hago uso de los volumenes aca hago las declaraciones
+# Es muy importante que los directorios existan para que el stack funcione
+volumes:
+  # Volumen ara guardar los datos del sistema de soporte
+  soporte-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/soporte-data
+      o: bind
+    name: soporte-data
+  # Volumen ara guardar los datos de postgress
+  postgress-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/postgress-data
+      o: bind
+    name: postgress-data
+  # Volumen ara guardar los datos de nginx-proxy-manager
+  npm-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/npm-data
+      o: bind
+    name: npm-data
+  letsencrypt:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/letsencrypt
+      o: bind
+    name: letsencrypt
