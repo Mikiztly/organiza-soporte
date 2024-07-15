@@ -1,0 +1,67 @@
+/* Estilos personalizados para Select2 en el Django admin en modo oscuro */
+.select2-container--default .select2-selection--multiple {
+    background-color: #000000;  /* Fondo oscuro */
+    color: #ffffff;  /* Texto claro */
+    border: 1px solid #444444;  /* Borde */
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    background-color: #000000;  /* Fondo oscuro del área de entrada */
+    color: #ffffff;  /* Texto claro */
+}
+
+.select2-container--default .select2-selection--multiple .select2-search--inline .select2-search__field {
+    background-color: #000000;  /* Fondo oscuro del campo de búsqueda */
+    color: #ffffff;  /* Texto claro del campo de búsqueda */
+    border: none;  /* Elimina el borde del campo de búsqueda */
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice,
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    background-color: #444444 !important;  /* Fondo oscuro */
+    border: 1px solid #666666 !important;  /* Borde */
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #ff4d4d;  /* Color del botón de eliminar */
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #555555 !important;  /* Fondo de las opciones seleccionadas */
+    color: #ffffff !important;  /* Color del texto de las opciones seleccionadas */
+}
+
+.select2-container--default .select2-results > .select2-results__options {
+    background-color: #000000;  /* Fondo del dropdown */
+}
+
+.select2-container--default .select2-results__option {
+    color: #ffffff;  /* Color del texto de las opciones */
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    background-color: #000000;  /* Fondo del campo de búsqueda */
+    color: #ffffff;  /* Color del texto del campo de búsqueda */
+}
+
+/* Ajuste adicional para el placeholder */
+.select2-container--default .select2-selection--multiple .select2-search__field::placeholder {
+    color: #cccccc;  /* Color del texto del marcador de posición */
+}
+
+/* Ajuste para el color del texto de las opciones seleccionadas */
+.select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+    color: #ffffff !important;  /* Texto claro */
+}
+
+/* Ajuste para el fondo de las opciones seleccionadas */
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #555555 !important;  /* Fondo oscuro */
+}
+
+/* Ajuste para eliminar el borde alrededor de los elementos seleccionados */
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    border: none !important;  /* Elimina el borde */
+    border-radius: 3px;  /* Opcional: redondear las esquinas */
+    padding: 3px;  /* Opcional: agregar espacio interno */
+}
