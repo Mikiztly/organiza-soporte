@@ -26,14 +26,14 @@ services:
     volumes:
       - soporte-data:/app
     depends_on:
-      - postgress
+      - postgres
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
     hostname: soporte-tecnico
     networks:
       lan_docker:
 
   # https://hackernoon.com/streamlining-your-django-development-environment-with-docker-containers
-  postgress:
+  postgres:
     container_name: postgres
     image: postgres:latest
     restart: unless-stopped
@@ -102,13 +102,13 @@ volumes:
       o: bind
     name: soporte-data
   # Volumen ara guardar los datos de postgress
-  postgress-data:
+  postgres-data:
     driver: local # Define the driver and options under the volume name
     driver_opts:
       type: none
       device: /mnt/docker-data/postgres-data
       o: bind
-    name: postgress-data
+    name: postgres-data
   # Volumen ara guardar los datos de nginx-proxy-manager
   npm-data:
     driver: local # Define the driver and options under the volume name
