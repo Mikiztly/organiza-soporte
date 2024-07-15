@@ -1,0 +1,126 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block titulo %}Strong{% endblock %}
+
+
+{% block content %}
+
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- div class="alert alert-success alert-dismissible text-white" role="alert"><strong>Se agrego un producto correctamente!</strong-->
+                    <!-- Card header -->
+                    <div class="card-header pb-0">
+                        <div class="d-lg-flex">
+                            <div>
+                                <h5 class="mb-0">Equipos</h5>
+                                <p class="text-sm mb-0">
+                                    Lista de Equipos
+                                </p>
+                            </div>
+                            <!--div class="ms-auto my-auto mt-lg-0 mt-4">
+                                <div class="ms-auto my-auto">
+                                    <a href="#" class="btn bg-gradient-danger btn-sm mb-0">+&nbsp;Agregar</a>
+                                </div>
+                            </div-->
+                        </div>
+                    </div>
+                    <div class="card-body px-0 pb-0">
+                        <div class="table-responsive">
+                            <table class="table table-flush" id="products-list">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tipo</th>
+                                    <th>Nombre</th>
+                                    <th>Estado</th>
+                                    <th>Asignado</th>
+                                    <th>Empresa</th>
+                                    <th>Accion</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% block ListadeEquipo %}
+
+                                {% for equipo in equipos %}
+                                    <tr>
+                                        <td class="text-sm">{{ forloop.counter }}</td>
+                                        <td class="text-sm">{{ equipo.Tipo }}</td>
+                                        <td class="text-sm">{{ equipo.Equipo }}</td>
+                                        <td>
+                                            {% if equipo.Estado == 'Asignado' %}
+                                                <span class="badge badge-info badge-sm">Asignado</span>
+                                            {% elif equipo.Estado == 'Sin Asignar' %}
+                                                <span class="badge badge-success badge-sm">Disponible</span>
+                                            {% elif equipo.Estado == 'Reparacion' %}
+                                                <span class="badge badge-danger badge-sm">En Reparacion</span>
+                                            {% endif %}
+                                        </td>
+                                    {% if equipo.Estado == 'Sin Asignar' %}
+                                        <td class="text-sm"> Sin Asignar</td>
+                                    {% else %}
+                                        <td class="text-sm">{{ equipo.Usuario }}</td>
+                                    {% endif %}
+                                    <td class="text-sm">{{ equipo.Sucursal }}</td>
+                                        <td class="text-sm">
+                                            <a href="{% url 'equipo_detail' id=equipo.id %}" data-bs-toggle="tooltip"
+                                               data-bs-original-title="Vista Previa">
+                                                <i class="fas fa-eye text-secondary"></i>
+                                            </a>
+                                            <!--a href="#" class="mx-3" data-bs-toggle="tooltip"
+                                               data-bs-original-title="Editar">
+                                                <i class="fas fa-user-edit text-secondary"></i>
+                                            </a>
+                                            <a href="#" data-bs-toggle="tooltip"
+                                               data-bs-original-title="Eliminar">
+                                                <i class="fas fa-trash text-secondary"></i>
+                                            </a-->
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                {% endblock ListadeEquipo %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="{% static 'assets/js/plugins/datatables.js' %}"></script>
+    <script>
+        if (document.getElementById('products-list')) {
+            const dataTableSearch = new simpleDatatables.DataTable("#products-list", {
+                searchable: true,
+                fixedHeight: false,
+                perPage: 7
+            });
+
+            document.querySelectorAll(".export").forEach(function (el) {
+                el.addEventListener("click", function (e) {
+                    var type = el.dataset.type;
+
+                    var data = {
+                        type: type,
+                        filename: "soft-ui-" + type,
+                    };
+
+                    if (type === "csv") {
+                        data.columnDelimiter = "|";
+                    }
+
+                    dataTableSearch.export(data);
+                });
+            });
+        }
+        ;
+    </script>
+
+
+{% endblock %}
+
