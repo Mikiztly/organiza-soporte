@@ -10,6 +10,7 @@ name: soporte-tecnico
 services:
   # https://hackernoon.com/streamlining-your-django-development-environment-with-docker-containers
   # Se construye una imagen en base a las declaraciones de dockerfile
+  # Esta es la aplicacion, se crea una imagen con el archivo dockerfile
   app:
     build: .
     container_name: soporte-tecnico
@@ -33,6 +34,8 @@ services:
       lan_docker:
 
   # https://hackernoon.com/streamlining-your-django-development-environment-with-docker-containers
+  # https://medium.com/@subscriberandersom/how-to-create-and-connect-to-a-postgres-container-using-docker-compose-and-env-files-2aac79372c5d
+  # Base de Datos para la aplicacion
   postgres:
     container_name: postgres
     image: postgres:latest
@@ -47,6 +50,23 @@ services:
       # - "5432:5432"
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
     hostname: postgres
+    networks:
+      lan_docker:
+
+
+  # https://blog.programster.org/deploy-cloudbeaver-using-docker
+  # Este es un servicio parecido a phpmyadmin pero permite a conectarse a distintos tipos de base de datos, en este caso a postgress
+  cloudbeaver:
+    container_name: cloudbeaver
+    image: dbeaver/cloudbeaver:latest
+    restart: unless-stopped
+    # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
+    # ports:
+      # - "8978:8978"
+    volumes:
+      - cloudbeaver:/opt/cloudbeaver/workspace
+    # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
+    hostname: cloudbeaver
     networks:
       lan_docker:
 
@@ -123,3 +143,12 @@ volumes:
       device: /mnt/docker-data/letsencrypt
       o: bind
     name: letsencrypt
+  # Volumen para guardar los datos de cloudbeaver
+  cloudbeaver:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/cloudbeaver
+      o: bind
+    name: cloudbeaver
+
