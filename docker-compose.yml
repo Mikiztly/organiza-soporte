@@ -56,17 +56,20 @@ services:
 
   # https://blog.programster.org/deploy-cloudbeaver-using-docker
   # Este es un servicio parecido a phpmyadmin pero permite a conectarse a distintos tipos de base de datos, en este caso a postgress
-  cloudbeaver:
-    container_name: cloudbeaver
-    image: dbeaver/cloudbeaver:latest
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
     restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: strong-password
     # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
     # ports:
       # - "8978:8978"
     volumes:
-      - cloudbeaver:/opt/cloudbeaver/workspace
+      - pgadmin-data:/var/lib/pgadmin
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
-    hostname: cloudbeaver
+    hostname: pgadmin
     networks:
       lan_docker:
 
@@ -78,7 +81,7 @@ services:
   # Password: changeme
   npm:
     container_name: npm
-    image: 'jc21/nginx-proxy-manager:latest'
+    image: jc21/nginx-proxy-manager:latest
     restart: unless-stopped
     # Estos son los unicos puertos a declara para que funcione todo con el proxy NPM
     ports:
@@ -144,11 +147,11 @@ volumes:
       o: bind
     name: letsencrypt
   # Volumen para guardar los datos de cloudbeaver
-  cloudbeaver:
+  pgadmin-data:
     driver: local # Define the driver and options under the volume name
     driver_opts:
       type: none
-      device: /mnt/docker-data/cloudbeaver
+      device: /mnt/docker-data/pgadmin-data
       o: bind
-    name: cloudbeaver
+    name: pgadmin-data
 
