@@ -12,10 +12,10 @@ services:
   # Se construye una imagen en base a las declaraciones de dockerfile
   app:
     build: .
-    # command:
-      # - 'python manage.py runserver 0.0.0.0:8000'
-      # - 'python manage.py makemigrations'
-      # - 'python manage.py migrate'
+    container_name: soporte-tecnico
+    command: sh -c "python manage.py makemigrations &&
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000"
     restart: unless-stopped
     # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
     # ports:
