@@ -27,6 +27,7 @@ services:
     volumes:
       # Para tener la opcion de cambiar los archivos y modificar la aplicacion usamos el directorio del archivo docker-compose.yml, muy util para el desarrollo de la aplicacion
       - $PWD:/app
+      # Una vez que se termino el desarrollo de la aplicacion se puede poner el directorio /app junto con los demas volumenes utilizando la declaracion de abajo
 #      - soporte-data:/app
     depends_on:
       - postgres
@@ -122,10 +123,7 @@ volumes:
 #    driver: local # Define the driver and options under the volume name
 #    driver_opts:
 #      type: none
-      # Para tener la opcion de cambiar los archivos y modificar la aplicacion usamos el directorio del archivo docker-compose.yml, muy util para el desarrollo de la aplicacion
-      # device: $PWD
-      # Una vez que se termino el desarrollo de la aplicacion se puede poner el directorio /app junto con los demas volumenes
-      # device: /mnt/docker-data/soporte-data
+#      device: /mnt/docker-data/soporte-data
 #      o: bind
 #    name: soporte-data
   # Volumen ara guardar los datos de postgress
