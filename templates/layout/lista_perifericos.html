@@ -1,0 +1,84 @@
+{% load static %}
+
+{% if equipo.Monitor_1 %}
+    <tr>
+        <td>
+            <div class="d-flex px-2 py-1">
+                <div>
+                    <img src="{% static 'assets/img/monitor.png' %}"
+                         class="avatar avatar-md me-3" alt="table image">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm"> Monitor 1</h6>
+                </div>
+            </div>
+        </td>
+        <td class="align-middle">
+            <span class="text-secondary text-sm">{{ equipo.Monitor_1 }}</span>
+        </td>
+        <td class="align-middle text-center">
+            <span class="text-secondary text-sm">{{ equipo.MonitorSN_1 }}</span>
+        </td>
+    </tr>
+{% endif %}
+{% if equipo.Monitor_2 %}
+    <tr>
+        <td>
+            <div class="d-flex px-2 py-1">
+                <div>
+                    <img src="{% static 'assets/img/monitor.png' %}" class="avatar avatar-md me-3" alt="table image">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">Monitor 2</h6>
+                </div>
+            </div>
+        </td>
+        <td class="align-middle">
+            <span class="text-secondary text-sm">{{ equipo.Monitor_2 }}</span>
+        </td>
+        
+        <td class="align-middle text-center">
+            <span class="text-secondary text-sm">{{ equipo.MonitorSN_2 }}</span>
+        </td>
+    </tr>
+{% endif %}
+{% if equipo.Monitor_3 %}
+    <tr>
+        <td>
+            <div class="d-flex px-2 py-1">
+                <div>
+                    <img src="{% static 'assets/img/monitor.png' %}" class="avatar avatar-md me-3" alt="table image">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">Monitor 3</h6>
+                </div>
+            </div>
+        </td>
+        <td class="align-middle">
+            <span class="text-secondary text-sm">{{ equipo.Monitor_3 }}</span>
+        </td>
+        <td class="align-middle text-center">
+            <span class="text-secondary text-sm">{{ equipo.MonitorSN_3 }}</span>
+        </td>
+    </tr>
+{% endif %}
+{% if equipo.Monitor_4 %}
+    <tr>
+        <td>
+            <div class="d-flex px-2 py-1">
+                <div>
+                    <img src="{% static 'assets/img/monitor.png' %}" class="avatar avatar-md me-3" alt="table image">
+                </div>
+                <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">Monitor 4</h6>
+                </div>
+            </div>
+        </td>
+        <td class="align-middle">
+            <span class="text-secondary text-sm">{{ equipo.Monitor_4 }}</span>
+        </td>
+        <td class="align-middle text-center">
+            <span class="text-secondary text-sm">{{ equipo.MonitorSN_4 }}</span>
+        </td>
+    </tr>
+{% endif %}

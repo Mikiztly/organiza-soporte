@@ -1,0 +1,14 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block titulo %}Documentacion{% endblock %}
+
+{% block content %}
+
+    <h1>{{ documento.titulo }}</h1>
+    <p>{{ documento.descripcion }}</p>
+    <div style="height: 800px;">
+        <embed src="{{ documento.documento.url }}" type="application/pdf" style="width: 100%; height: 100%;" />
+    </div>
+    <a href="#">Volver a la lista</a>
+    
+{% endblock %}
