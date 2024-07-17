@@ -25,7 +25,9 @@ services:
     env_file:
       - app.env
     volumes:
-      - soporte-data:/app
+      # Para tener la opcion de cambiar los archivos y modificar la aplicacion usamos el directorio del archivo docker-compose.yml, muy util para el desarrollo de la aplicacion
+      - $PWD:/app
+#      - soporte-data:/app
     depends_on:
       - postgres
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
@@ -116,16 +118,16 @@ networks:
 # Es muy importante que los directorios existan para que el stack funcione
 volumes:
   # Volumen ara guardar los datos del sistema de soporte
-  soporte-data:
-    driver: local # Define the driver and options under the volume name
-    driver_opts:
-      type: none
+#  soporte-data:
+#    driver: local # Define the driver and options under the volume name
+#    driver_opts:
+#      type: none
       # Para tener la opcion de cambiar los archivos y modificar la aplicacion usamos el directorio del archivo docker-compose.yml, muy util para el desarrollo de la aplicacion
-      device: $PWD
+      # device: $PWD
       # Una vez que se termino el desarrollo de la aplicacion se puede poner el directorio /app junto con los demas volumenes
       # device: /mnt/docker-data/soporte-data
-      o: bind
-    name: soporte-data
+#      o: bind
+#    name: soporte-data
   # Volumen ara guardar los datos de postgress
   postgres-data:
     driver: local # Define the driver and options under the volume name
