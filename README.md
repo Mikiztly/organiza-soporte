@@ -18,9 +18,8 @@ Para tener datos permanentes se declaran volumenes para redirigir esos archivos 
 **IMPORTANTE**<br>
 
 Para evitar errores hay que crear las carpetas:
-* cloudbeaver -> aca se guardan las conecciones y datos para manejar la base de datos
 * letsencrypt -> para guardar los certificados ssl
 * npm-data -> para guardar las configuraciones de Nginx-Proxy-Manager
+* pgadmin-data -> aca se guardan las conecciones y datos para manejar la base de datos
 * postgres-data -> en esta carpeta se guarda la base de datos
 * soporte-data -> en esta carpeta se guardan los datos del sistema
-
