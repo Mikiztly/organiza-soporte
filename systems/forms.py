@@ -15,7 +15,7 @@ class ImpresoraForm(forms.ModelForm):
 
 class ImpresoraAsignadasForm(forms.ModelForm):
     Empresa = forms.ModelChoiceField(queryset=Sucursal.objects.all())  # Inicialmente vacío
-    Equipo = forms.ModelChoiceField(queryset=Equipo.objects.filter(Sucursal=id))
+#    Equipo = forms.ModelChoiceField(queryset=Equipo.objects.filter(Sucursal=id))
     class Meta:
         model = ImpresoraAsignadas
         fields = '__all__'

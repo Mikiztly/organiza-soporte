@@ -89,12 +89,20 @@ WSGI_APPLICATION = 'Strong.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASES = {
     "default": {
+        # Agregado por Mikiztly para usar el archivo app.env para pasar parametros de configuracion
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "ssystems24",
-        "HOST": "localhost",
-        "PORT": "58732",
+        "NAME": os.environ["POSTGRES_DB"],
+        "USER": os.environ["POSTGRES_USER"],
+        "PASSWORD": os.environ["POSTGRES_PASSWORD"],
+        "HOST": os.environ["POSTGRES_HOST"],
+        "PORT": os.environ["POSTGRES_PORT"],
+        # Dejo la configuracion original
+#        "ENGINE": "django.db.backends.postgresql",
+#        "NAME": "postgres",
+#        "USER": "postgres",
+#        "PASSWORD": "ssystems24",
+#        "HOST": "localhost",
+#        "PORT": "58732",
     }
 }
 

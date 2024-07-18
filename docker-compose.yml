@@ -49,8 +49,8 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
-    # ports:
-      # - "5432:5432"
+    ports:
+      - "5432:5432"
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
     hostname: postgres
     networks:
