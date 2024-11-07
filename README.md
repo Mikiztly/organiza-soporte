@@ -1,10 +1,9 @@
-<!--- https://www.makeread.me/generator/pottekkat-awesome-readme --->
 # Soporte Tecnico
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/Mikiztly/organiza-soporte)](https://img.shields.io/github/last-commit/Mikiztly/organiza-soporte)
 [![GitHub](https://img.shields.io/github/license/Mikiztly/organiza-soporte)](https://img.shields.io/github/license/Mikiztly/organiza-soporte)
 
-Sistema para organizar y llevar un control de los trabajos realizados en el departamento de Soporte tecnico desarrollado por Pablo Valdivieso, este sistem permite tener un seguimiento de los clientes y las incidencias de cada uno.
+Sistema para organizar y llevar un control de los trabajos realizados en el departamento de Soporte Técnico desarrollado por Pablo Valdivieso, este sistema permite tener un seguimiento de los clientes y las incidencias de cada uno.
 Lo que hice fue poner todo el proyecto en un docker para mejorar su desarrollo y posterior publicacion, agregue varios servicios:
 
 * [PostgreSQL](https://www.postgresql.org/): Es un potente sistema de base de datos relacional de código abierto con más de 35 años de desarrollo activo que le ha ganado una sólida reputación por su fiabilidad, robustez y rendimiento.

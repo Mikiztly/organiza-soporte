@@ -104,6 +104,56 @@ services:
     networks:
       lan_docker:
 
+  # Stack para habilitar el monitoreo en un servidor grafana ya funcionando
+  # Al igual que otros stacks esta con la configurcion de IP definida
+  # Con esto vamos a obtener informacion de la maquina
+  # https://github.com/prometheus/node_exporter
+  # https://prometheus.io/docs/guides/node-exporter/
+  node-exporter:
+    container_name: node-exporter
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    # Para que se pueda conectar tenemos que exponer el puerto
+    ports:
+      - '9100:9100'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
+    hostname: node-exporter
+    networks:
+      lan_docker:
+  # FIN node-exporter
+
+  # Este contenedor es el que va a monitoreear docker
+  # https://prometheus.io/docs/guides/cadvisor/#docker-compose-configuration
+  # https://grafana.com/grafana/dashboards/893-main/
+  # https://github.com/google/cadvisor
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor #google/cadvisor:latest
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    # Para que se pueda conectar tenemos que exponer el puerto
+    ports:
+      - '8080:8080'
+    # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
+    hostname: cadvisor
+    networks:
+      lan_docker:
+  # FIN cadvisor
+
 # Declaramos la red que vamos a utilizar
 networks:
   # Configuracion de la red lan_docker
