@@ -47,3 +47,17 @@ DATABASES = {
 }
 ```
 Con esta modificacion toma los datos guardados en la variable app.env y los utiliza en el dock de la aplicacion y en el dock de postgres para la coneccion a la DB.
+
+Para agregar un superusuario ejecutar en el docker soporte-tecnico:
+```shell
+python manage.py createsuperuser
+```
+Es un comando interactivo donde ingrsas los datos, para poner una clave al usuario "root" dejamos en blanco el Nombre de usuario:
+```shell
+docker exec -ti soporte-tecnico python manage.py createsuperuser
+Nombre de usuario (leave blank to use 'root'): 
+Dirección de email: 
+Password: 
+Password (again): 
+Superuser created successfully.
+```
