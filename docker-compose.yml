@@ -57,7 +57,7 @@ services:
       lan_docker:
 
 
-  # https://blog.programster.org/deploy-cloudbeaver-using-docker
+  # https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
   # Este es un servicio parecido a phpmyadmin pero permite a conectarse a distintos tipos de base de datos, en este caso a postgress
   pgadmin:
     container_name: pgadmin
@@ -68,7 +68,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: strong-password
     # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
     # ports:
-      # - "8978:8978"
+      # - "8100:80"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
