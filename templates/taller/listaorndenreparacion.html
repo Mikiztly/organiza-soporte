@@ -1,0 +1,167 @@
+{% extends 'taller/index.html' %}
+{% load static %}
+{% block titulo %}Taller{% endblock %}
+
+{% block content1 %}
+    {% if messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <!-- Título -->
+        <h2 class="my-3">Control de Órdenes</h2>
+
+        <!-- Formulario de filtros -->
+        <form method="GET" action="" id="filter-form">
+            <div class="row g-2 align-items-end">
+                <!-- Estado -->
+                <div class="col-md-3">
+                    <label for="estado-filter" class="form-label">Estado</label>
+                    <select class="form-select form-select-sm" name="estado" id="estado-filter">
+                        <option value="">Todos</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="en_proceso">En Proceso</option>
+                        <option value="finalizado">Finalizado</option>
+                        <option value="entregado">Entregado</option>
+                    </select>
+                </div>
+
+                <!-- Equipos Entregados -->
+                <div class="col-md-2">
+                    <label for="entregado-filter" class="form-label">Equipos Entregados</label>
+                    <select class="form-select form-select-sm" name="entregado" id="entregado-filter">
+                        <option value="no" selected>No</option>
+                        <option value="si">Sí</option>
+                    </select>
+                </div>
+
+                <!-- Cliente -->
+                <div class="col-md-3">
+                    <label for="cliente-filter" class="form-label">Cliente</label>
+                    <input type="text" class="form-control form-control-sm" name="cliente" id="cliente-filter"
+                           placeholder="Buscar cliente">
+                </div>
+
+                <!-- Buscar por # de Orden -->
+                <div class="col-md-3">
+                    <label for="orden-filter" class="form-label">Buscar por # de Orden</label>
+                    <input type="text" class="form-control form-control-sm" name="orden" id="orden-filter"
+                           placeholder="Número de Orden">
+                </div>
+            </div>
+        </form>
+
+        <!-- Tabla de Órdenes -->
+        <div class="card mt-4">
+            <div class="table-responsive">
+                <table class="table table-flush" id="products-list">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha Ingreso</th>
+                        <th>Cliente</th>
+                        <th>Empresa</th>
+                        <th>Estado</th>
+                        <th>Tipo de Equipo</th>
+                        <th>Número de Serie</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="ordenes-table-body">
+                    {% for orden in ordenes %}
+                        <tr>
+                            <td># {{ orden.id }}</td>
+                            <td>{{ orden.fecha_ingreso }}</td>
+                            <td>{{ orden.cliente.nombre }}</td>
+                            <td>{{ orden.cliente.nombre_empresa }}</td>
+                            <td>
+                                {% if orden.estado == 'pendiente' %}
+                                    <span class="badge bg-gradient-warning">
+                                        {{ orden.estado }}
+                                    </span>
+                                {% elif orden.estado == 'entregado' %}
+                                    <span class="badge bg-gradient-success">
+                                        Entregado
+                                    </span>
+                                {% elif orden.estado == 'en_proceso' %}
+                                    <span class="badge bg-gradient-info">
+                                        En Proceso
+                                    </span>
+                                {% elif orden.estado == 'finalizado' %}
+                                    <span class="badge bg-gradient-danger">
+                                        Finalizado
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-dark">
+                                        {{ orden.estado }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td>{{ orden.equipo.tipo }}</td>
+                            <td>{{ orden.equipo.numero_serie }}</td>
+                            <td>
+                                <a href="{% url 'detalleOrdenReparacion' orden.id %}"
+                                   class="btn btn-link text-secondary mb-0">
+                                    <i class="fas fa-edit text-xs"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para filtrado dinámico -->
+    <script>
+        const filterForm = document.getElementById('filter-form');
+
+        // Función para enviar el formulario automáticamente
+        function submitForm() {
+            filterForm.submit();
+        }
+
+        // Agregar eventos a los elementos del formulario
+        document.getElementById('estado-filter').addEventListener('change', submitForm);
+        document.getElementById('entregado-filter').addEventListener('change', submitForm);
+        document.getElementById('cliente-filter').addEventListener('input', submitForm);
+        document.getElementById('orden-filter').addEventListener('input', submitForm);
+    </script>
+{% endblock %}
+{% block js %}
+<script src="{% static 'assets/js/plugins/datatables.js' %}"></script>
+<script>
+    if (document.getElementById('products-list')) {
+        const dataTableSearch = new simpleDatatables.DataTable("#products-list", {
+            searchable: true,
+            fixedHeight: false,
+            perPage: 7
+        });
+
+        document.querySelectorAll(".export").forEach(function (el) {
+            el.addEventListener("click", function (e) {
+                var type = el.dataset.type;
+
+                var data = {
+                    type: type,
+                    filename: "soft-ui-" + type,
+                };
+
+                if (type === "csv") {
+                    data.columnDelimiter = "|";
+                }
+
+                dataTableSearch.export(data);
+            });
+        });
+    }
+    ;
+</script>
+
+{% endblock %}

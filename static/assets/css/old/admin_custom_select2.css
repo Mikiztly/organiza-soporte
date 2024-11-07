@@ -1,0 +1,111 @@
+select {
+    height: 3.0rem;
+}/* Estilos personalizados para Select2 en el Django admin */
+
+/* Tema claro */
+html[data-theme="light"] .select2-container--default .select2-selection--multiple {
+    min-height: 38px;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+html[data-theme="light"] .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    line-height: 30px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+html[data-theme="light"] .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #fff;
+}
+
+html[data-theme="light"] .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+html[data-theme="light"] .select2-container--default .select2-search--inline .select2-search__field {
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+}
+
+html[data-theme="light"] .select2-container--default .select2-results__option {
+    color: #333;
+}
+
+html[data-theme="light"] .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #007bff;
+    color: #fff;
+}
+
+html[data-theme="light"] .select2-container--default .select2-results > .select2-results__options {
+    background-color: #f0f0f0;
+}
+
+html[data-theme="light"] .select2-container--default .select2-selection--multiple .select2-search__field::placeholder {
+    color: #ccc;
+}
+
+/* Estilos para la lista desplegable en tema claro */
+html[data-theme="light"] .select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #007bff !important;
+    color: #fff !important;
+}
+
+/* Tema oscuro */
+html[data-theme="dark"] .select2-container--default .select2-selection--multiple {
+    min-height: 38px;
+    font-size: 14px;
+    background-color: #121212;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+html[data-theme="dark"] .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    line-height: 30px;
+    background-color: #025951;
+    color: #fff;
+    border: none;
+}
+
+html[data-theme="dark"] .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #fff;
+}
+
+html[data-theme="dark"] .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    background-color: #121212;
+    color: #fff;
+}
+
+html[data-theme="dark"] .select2-container--default .select2-search--inline .select2-search__field {
+    background-color: #121212;
+    color: #fff;
+    border: none;
+}
+
+html[data-theme="dark"] .select2-container--default .select2-results__option {
+    color: #fff;
+}
+
+html[data-theme="dark"] .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #025951 !important;
+    color: #fff !important;
+}
+
+html[data-theme="dark"] .select2-container--default .select2-results > .select2-results__options {
+    background-color: #121212;
+}
+
+html[data-theme="dark"] .select2-container--default .select2-selection--multiple .select2-search__field::placeholder {
+    color: #ccc;
+}
+
+/* Estilos para la lista desplegable en tema oscuro */
+html[data-theme="dark"] .select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #025951 !important;
+    color: #fff !important;
+}

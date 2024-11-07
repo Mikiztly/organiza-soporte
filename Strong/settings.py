@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'systems',
+    "taller",
     'django_select2',
     'dal',
     'dal_select2'
@@ -147,3 +148,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email Config
+EMAIL_HOST = 'mail.candidornotar.com.ar'
+EMAIL_HOST_USER = 'notificaciones@jethro.com.ar'
+EMAIL_HOST_PASSWORD = '5y5t3m$5.-24Strong'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False  # Deshabilitar TLS
+EMAIL_USE_SSL = True  # Habilitar SSL
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

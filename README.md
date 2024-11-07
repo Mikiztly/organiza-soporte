@@ -22,3 +22,28 @@ Para evitar errores hay que crear las carpetas:
 * pgadmin-data -> aca se guardan las conecciones y datos para manejar la base de datos
 * postgres-data -> en esta carpeta se guarda la base de datos
 * soporte-data -> en esta carpeta se guardan los datos del sistema
+
+No olvidar cambiar la configuracion de la coneccion a la DB en el archivo "Strong->settings.py":
+```shell
+# Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+DATABASES = {
+    "default": {
+        # Agregado por Mikiztly para usar el archivo app.env para pasar parametros de configuracion
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ["POSTGRES_DB"],
+        "USER": os.environ["POSTGRES_USER"],
+        "PASSWORD": os.environ["POSTGRES_PASSWORD"],
+        "HOST": os.environ["POSTGRES_HOST"],
+        "PORT": os.environ["POSTGRES_PORT"],
+        # Dejo la configuracion original
+#        "ENGINE": "django.db.backends.postgresql",
+#        "NAME": "postgres",
+#        "USER": "postgres",
+#        "PASSWORD": "ssystems24",
+#        "HOST": "localhost",
+#        "PORT": "58732",
+    }
+}
+```
+Con esta modificacion toma los datos guardados en la variable app.env y los utiliza en el dock de la aplicacion y en el dock de postgres para la coneccion a la DB.

@@ -1,8 +1,8 @@
 #
-# Son cuatro servicios para el sistema de Soporte tecnico desarrollado por Pablo Valdivieso.
+# Son varios servicios para el sistema de Soporte tecnico desarrollado por Pablo Valdivieso.
 # Se configuro la red de forma manual, esto me da la ventaja de usar los nombres de host en vez de IP y tambien puedo conectarme a los servidores desde otro Docker.
-
-version: '3.8'
+# Para actualizar la aplicacion se baja docker y despues lo reconstruimos con:
+# docker-compose up -d --build
 
 # Le doy un nombre descriptivo para saber que es en portainer
 name: soporte-tecnico
@@ -14,6 +14,7 @@ services:
   app:
     build: .
     container_name: soporte-tecnico
+    # python manage.py startapp taller
     command: sh -c "python manage.py makemigrations &&
       python manage.py migrate &&
       python manage.py runserver 0.0.0.0:8000"
@@ -35,6 +36,7 @@ services:
     hostname: soporte-tecnico
     networks:
       lan_docker:
+        ipv4_address: 192.168.200.100
 
   # https://hackernoon.com/streamlining-your-django-development-environment-with-docker-containers
   # https://medium.com/@subscriberandersom/how-to-create-and-connect-to-a-postgres-container-using-docker-compose-and-env-files-2aac79372c5d
@@ -55,7 +57,7 @@ services:
     hostname: postgres
     networks:
       lan_docker:
-
+        ipv4_address: 192.168.200.101
 
   # https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
   # Este es un servicio parecido a phpmyadmin pero permite a conectarse a distintos tipos de base de datos, en este caso a postgress
@@ -75,6 +77,7 @@ services:
     hostname: pgadmin
     networks:
       lan_docker:
+        ipv4_address: 192.168.200.102
 
   # Creamos nginx-proxy-manager para vincular la red con portainer y mariadb
   # https://nginxproxymanager.com/setup/
@@ -103,6 +106,7 @@ services:
     hostname: npm
     networks:
       lan_docker:
+        ipv4_address: 192.168.200.103
 
   # Stack para habilitar el monitoreo en un servidor grafana ya funcionando
   # Al igual que otros stacks esta con la configurcion de IP definida
@@ -129,6 +133,7 @@ services:
     hostname: node-exporter
     networks:
       lan_docker:
+        ipv4_address: 192.168.200.104
   # FIN node-exporter
 
   # Este contenedor es el que va a monitoreear docker
@@ -152,6 +157,7 @@ services:
     hostname: cadvisor
     networks:
       lan_docker:
+        ipv4_address: 192.168.200.105
   # FIN cadvisor
 
 # Declaramos la red que vamos a utilizar
@@ -207,4 +213,3 @@ volumes:
       device: /mnt/docker-data/pgadmin-data
       o: bind
     name: pgadmin-data
-

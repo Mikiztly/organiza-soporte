@@ -1,0 +1,147 @@
+{% extends 'taller/index.html' %}
+{% load static %}
+{% block titulo %}Taller{% endblock %}
+{% block content1 %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card p-4">
+                    <h4 class="text-center form-title mb-4">Orden de Reparación N° #{{ ordenreparacion.id }}</h4>
+
+                    <!-- Mostrar mensajes de error generales -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'success' %}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                    <span class="alert-text"><strong>{{ message }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% elif message.tags == 'error' %}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                    <span class="alert-text"><strong>{{ message }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- Mostrar errores no asociados a campos específicos -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-warning">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-6 align-right">
+                                <h6>Fecha de ingreso: {{ object.fecha_ingreso }}</h6>
+                            </div>
+                        </div>
+                        <hr class="horizontal dark mt-0">
+
+                        <!-- Datos del Cliente -->
+                        <h6>Datos de contacto</h6>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="firstName" class="form-label">Nombre del Cliente:</label>
+                                <div class="input-group">
+                                    <input id="firstName" value="{{ object.cliente }}" class="form-control" type="text"
+                                           readonly>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="Correo" class="form-label">Correo:</label>
+                                <div class="input-group">
+                                    <input id="Correo" value="{{ object.cliente.correo }}" class="form-control"
+                                           type="text" readonly>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label for="Telefono" class="form-label">Telefono:</label>
+                                <div class="input-group">
+                                    <input id="Telefono" value="{{ object.cliente.telefono }}" class="form-control"
+                                           type="text" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="horizontal dark mt-0">
+
+                        <!-- Información del Equipo -->
+                        <div class="row">
+                            <div class="col-6 align-right">
+                                <h6>Información del Equipo</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label for="Tipo">Tipo:</label>
+                                <input class="form-control" id="Tipo" type="text" value="{{ object.equipo.tipo }}"
+                                       readonly>
+                            </div>
+                            <div class="col-3">
+                                <label for="N/S">N/S:</label>
+                                <input id="N/S" class="form-control" type="text"
+                                       value="{{ object.equipo.numero_serie }}" disabled="disabled">
+                            </div>
+                            <div class="col-3">
+                                <label for="Marca">Marca:</label>
+                                <input id="Marca" class="form-control" type="text" value="{{ object.equipo.marca }}"
+                                       readonly>
+                            </div>
+                            <div class="col-3">
+                                <label for="Modelo">Modelo:</label>
+                                <input class="form-control" id="Modelo" type="text" value="{{ object.equipo.modelo }}"
+                                       readonly>
+                            </div>
+                        </div>
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <label for="falla">Falla</label>
+                            {{ form.falla }}
+                        </div>
+                    </div>
+
+                        <!-- Campos del Formulario -->
+                        <div class="row mt-4">
+                            <div class="col-7">
+                                <label for="informe_cliente">Informe al cliente:</label>
+                                {{ form.informe_cliente }}
+                                {% if form.informe_cliente.errors %}
+                                    <div class="text-danger">{{ form.informe_cliente.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-3">
+                                <label>Estado:</label>
+                                {{ form.estado }}
+                                {% if form.estado.errors %}
+                                    <div class="text-danger">{{ form.estado.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    <div class="row mt-4">
+                        <div class="col-7">
+                            <label for="informe_tecnico">Informe Técnico:</label>
+                            {{ form.informe_tecnico }}
+                            
+                        </div>
+                    </div>
+                    
+
+                        <button type="submit" class="btn btn-success mt-3">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends 'taller/index.html' %}
+{% load static %}
+{% block titulo %}Taller{% endblock %}
+{% block content1 %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card p-4">
+                    <h4 class="text-center form-title mb-4">Formulario de Orden de Reparación</h4>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Alerta!: </strong>{{ message }}!
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <!-- Cliente -->
+                        <div class="form-group mb-3">
+                            {{ form.cliente.label_tag }}
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                {{ form.cliente }}
+                                <button type="button" class="btn btn-outline-dark mb-0" data-bs-toggle="modal"
+                                        data-bs-target="#addClienteModal" id="addClienteButton">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-dark mb-0" data-bs-toggle="modal"
+                                        data-bs-target="#addClienteModal" id="addClienteButton">
+                                    <i class="fas fa-plus"></i> Agregar Cliente
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Equipo -->
+                        <div class="form-group mb-3">
+                            {{ form.equipo.label_tag }}
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fas fa-laptop"></i>
+                                </span>
+                                {{ form.equipo }}
+                                <button type="button" class="btn btn-outline-dark mb-0" data-bs-toggle="modal"
+                                        data-bs-target="#addClienteModal" id="addClienteButton">
+                                    <i class="fas fa-search"></i></button>
+                                <button type="button" class="btn btn-outline-dark mb-0" data-bs-toggle="modal"
+                                        data-bs-target="#addEquipoModal" id="addEquipoButton">
+                                    <i class="fas fa-plus"></i> Agregar Equipo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Falla del equipo -->
+                        <div class="form-group mb-3">
+                            <i class="fas fa-exclamation-triangle form-icon"></i>
+                            {{ form.falla.label_tag }}
+                            {{ form.falla }}
+                        </div>
+                        <!-- Accesorios -->
+                        <div class="form-group mb-3">
+                            <i class="fas fa-plug form-icon"></i>
+                            {{ form.accesorios.label_tag }}
+                            {{ form.accesorios }}
+                        </div>
+                        <!-- Estado -->
+                        <div class="form-group mb-3">
+                            <i class="fas fa-info-circle form-icon"></i>
+                            {{ form.estado.label_tag }}
+                            {{ form.estado }}
+                        </div>
+                        <!-- Informe técnico -->
+                        <div class="form-group mb-3">
+                            {{ form.informe_tecnico.label_tag }}
+                            {{ form.informe_tecnico }}
+                        </div>
+                        <!-- Informe para el cliente -->
+                        <div class="form-group mb-3">
+                            {{ form.informe_cliente.label_tag }}
+                            {{ form.informe_cliente }}
+                        </div>
+                        <!-- Botón de envío -->
+                        <div class="text-lg-end">
+                            <button class="btn btn-icon btn-3 btn-outline-dark" type="submit">
+                                <span class="btn-inner--icon"><i class="ni ni-button-play"></i></span>
+                                <span class="btn-inner--text">Aceptar</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+    <!-- Modal para agregar Cliente -->
+    <div class="modal fade" id="addClienteModal" tabindex="-1" aria-labelledby="addClienteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addClienteModalLabel">Agregar Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-cliente-form">
+                        <div class="mb-3">
+                            <label for="clienteNombre" class="form-label">Nombre del Cliente</label>
+                            <input type="text" class="form-control" id="clienteNombre" placeholder="Nombre del cliente">
+                        </div>
+                        <!-- Otros campos para cliente -->
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar Equipo -->
+    <div class="modal fade" id="addEquipoModal" tabindex="-1" aria-labelledby="addEquipoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addEquipoModalLabel">Agregar Equipo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-equipo-form">
+                        <div class="mb-3">
+                            <label for="equipoNombre" class="form-label">Nombre del Equipo</label>
+                            <input type="text" class="form-control" id="equipoNombre" placeholder="Nombre del equipo">
+                        </div>
+                        <!-- Otros campos para equipo -->
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#cliente-select').change(function () {
+                var clienteId = $(this).val();
+                $.ajax({
+                    url: "{% url 'filtrar_equipos_por_cliente' %}",
+                    data: {
+                        'cliente_id': clienteId
+                    },
+                    success: function (data) {
+                        var equipoSelect = $('#equipo-select');
+                        equipoSelect.empty();
+                        equipoSelect.append('<option value="">Seleccione un equipo</option>');
+                        $.each(data, function (key, value) {
+                            equipoSelect.append('<option value="' + value.id + '">' + value.nombre + '</option>');
+                        });
+                    }
+                });
+            });
+
+            // Si seleccionas un equipo primero, puedes hacer una lógica inversa
+            $('#equipo-select').change(function () {
+                var equipoId = $(this).val();
+                $.ajax({
+                    url: "{% url 'obtener_cliente_por_equipo' %}",
+                    data: {
+                        'equipo_id': equipoId
+                    },
+                    success: function (data) {
+                        $('#cliente-select').val(data.cliente_id);
+                    }
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

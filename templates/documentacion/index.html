@@ -27,7 +27,7 @@
                                             <!--  
                     <div class="avatar-group">
                       <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-original-title="Jessica Rowland">
-                        <img alt="Image placeholder" src="{% static 'assets/img/team-3.jpg' %}" class="">
+                        <img alt="Image placeholder" src="{'% static 'assets/img/team-3.jpg' %}" class="">
                       </a>
                       <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-original-title="Audrey Love">
                         <img alt="Image placeholder" src="../../../assets/img/team-4.jpg" class="rounded-circle">
@@ -54,7 +54,6 @@
                                                 <div class="dropdown-menu dropdown-menu-end me-sm-n4 me-n3"
                                                      aria-labelledby="navbarDropdownMenuLink">
                                                     <a class="dropdown-item" href="{{ d.documento.url }}">Descargar PDF</a>
-                                                    <!--a href="{% url 'documento' d.pk %}" class="dropdown-item">Ver Documento</a-->
                                                 </div>
                                             </div>
                                         </div>
